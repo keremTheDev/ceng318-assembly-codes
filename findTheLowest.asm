@@ -1,0 +1,32 @@
+.MODEL SMALL
+.STACK 64
+
+.DATA
+GRADES DB 69,87,96,45,75
+LOWEST DB ?
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+    MOV CX,05
+    MOV SI,OFFSET GRADES 
+    
+    MOV AL,[SI]
+    INC SI
+    DEC CX
+    
+AGAIN:
+    CMP AL,[SI]
+    JB NEXT ;JB NEXT
+    MOV AL,[SI]
+NEXT:
+    INC SI
+    LOOP AGAIN
+    
+    MOV LOWEST,AL
+    MOV AH,4CH
+    INT 21H
+ENDP
+    END MAIN
+    
