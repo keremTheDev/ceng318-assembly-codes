@@ -1,0 +1,44 @@
+.MODEL SMALL
+.STACK 64
+
+.DATA
+MESSAGE DB 'This is a test of the display routine', '$'
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    CALL CLEAR
+    CALL CURSOR
+    CALL DISPLAY
+    
+    MOV AH,4CH
+    INT 21H
+MAIN ENDP
+
+CLEAR PROC
+    MOV AX,0600H
+    MOV BH,07
+    MOV CX,0000
+    MOV DX,184FH
+    INT 10H
+    RET
+CLEAR ENDP
+
+CURSOR PROC
+    MOV AH,02
+    MOV BH,00
+    MOV DH,12
+    MOV DL,39
+    INT 10H
+    RET
+CURSOR ENDP
+
+DISPLAY PROC
+    MOV AH,09
+    MOV DX,OFFSET MESSAGE
+    INT 21H
+    RET
+DISPLAY ENDP
+    END MAIN
